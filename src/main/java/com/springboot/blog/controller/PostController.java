@@ -26,9 +26,7 @@ private PostService postService;
     {
     "title":"post1",
     "description":"description1",
-    "content":"content1",
-    "dateCreated":"2022-06-11T14:45:15",
-    "dateModified":"2022-06-11T14:45:15"
+    "content":"content1"
 }
      */
     @PostMapping("/create")
@@ -49,5 +47,12 @@ private PostService postService;
     @GetMapping("/{id}")
     public ResponseEntity<PostDTO>getPostByID(@PathVariable(name="id")long id){
         return ResponseEntity.ok(postService.getPostByID(id));
+    }
+
+    //Update Post by ID
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PostDTO>UpdatePost( @RequestBody PostDTO postDTO, @PathVariable(name="id")long id){
+        return ResponseEntity.ok(postService.updatePost(postDTO,id));
     }
 }

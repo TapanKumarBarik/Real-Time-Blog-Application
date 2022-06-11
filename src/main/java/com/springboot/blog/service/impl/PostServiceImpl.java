@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,6 +24,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDTO createPost(PostDTO postDTO) {
+        postDTO.setDateCreated(new Date());
+        postDTO.setDateModified(new Date());
         Post newPost =postRepository.save(mapToPost(postDTO));
         //convert entity to dto
         return mapToPostDTO(newPost);
@@ -32,8 +35,8 @@ public class PostServiceImpl implements PostService {
     public List<PostDTO> getAllPosts() {
         List<Post>post=postRepository.findAll();
         List<PostDTO>newPost=new ArrayList<>();
-        for(int i=0;i<post.size();i++){
-            newPost.add(mapToPostDTO(post.get(i)));
+        for (Post value : post) {
+            newPost.add(mapToPostDTO(value));
         }
         return newPost;
     }
@@ -42,6 +45,18 @@ public class PostServiceImpl implements PostService {
     public PostDTO getPostByID(long id) {
         Post post=postRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("post","id",id));
         return mapToPostDTO(post);
+    }
+
+    @Override
+    public PostDTO updatePost(PostDTO postDTO, long id) {
+        Post post=postRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("post","id",id));
+
+        post.setContent(postDTO.getContent());
+        post.setDateModified(new Date());
+        post.setDescription(postDTO.getDescription());
+        post.setTitle(postDTO.getTitle());
+        Post newPost =postRepository.save(post);
+        return mapToPostDTO(newPost);
     }
 
     //helper
