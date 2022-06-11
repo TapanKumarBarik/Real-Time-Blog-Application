@@ -14,10 +14,10 @@ import java.util.Date;
 
 @Entity
 @Table(
-        name = "post",
+        name = "posts",
         uniqueConstraints ={@UniqueConstraint(columnNames = {"title"})}
 )
-public class post {
+public class Post {
     @Id
     @GeneratedValue(
             strategy = GenerationType.AUTO
