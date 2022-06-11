@@ -55,4 +55,13 @@ private PostService postService;
     public ResponseEntity<PostDTO>UpdatePost( @RequestBody PostDTO postDTO, @PathVariable(name="id")long id){
         return ResponseEntity.ok(postService.updatePost(postDTO,id));
     }
+
+    //delete post
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String>deletePostById( @PathVariable(name="id")long id){
+
+        postService.deletePostById(id);
+        return ResponseEntity.ok("Successfully deleted the post with "+id);
+    }
 }
