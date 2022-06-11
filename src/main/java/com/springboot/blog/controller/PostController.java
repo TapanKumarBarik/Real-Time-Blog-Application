@@ -41,6 +41,13 @@ private PostService postService;
 
     @GetMapping
     public ResponseEntity<List<PostDTO>>getAllPosts(){
-        return new ResponseEntity<>(postService.getAllPosts(),HttpStatus.ACCEPTED);
+        return ResponseEntity.ok(postService.getAllPosts());
+    }
+
+    //Get Post by ID
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDTO>getPostByID(@PathVariable(name="id")long id){
+        return ResponseEntity.ok(postService.getPostByID(id));
     }
 }
